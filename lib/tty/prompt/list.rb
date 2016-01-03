@@ -105,7 +105,11 @@ module TTY
       end
 
       def keytab(event)
-        @active = (@active == @choices.length) ? 1 : @active + 1
+        keydown(event)
+      end
+
+      def keyshifttab(event)
+        keyup(event)
       end
 
       private

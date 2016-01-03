@@ -32,6 +32,8 @@ module TTY
             key.name = :enter
           when Codes::TAB
             key.name = :tab
+          when Codes::SHIFT_TAB
+            key.name = :shifttab
           when Codes::BACKSPACE
             key.name = :backspace
           when Codes::DELETE

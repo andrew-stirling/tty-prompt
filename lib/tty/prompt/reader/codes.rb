@@ -11,6 +11,7 @@ module TTY
         RETURN   = "\r"
         SPACE    = " "
         TAB      = "\t"
+	SHIFT_TAB = "\e[Z"
 
         KEY_UP     = "\e[A"
         KEY_DOWN   = "\e[B"

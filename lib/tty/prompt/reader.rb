@@ -159,7 +159,7 @@ module TTY
       # @api public
       def parse_key_event(event)
         return if event.key.nil?
-        permitted_events = %w(up down left right space return enter num)
+        permitted_events = %w(up down left right space return enter num tab)
         return unless permitted_events.include?("#{event.key.name}")
         :"key#{event.key.name}"
       end

@@ -7,7 +7,7 @@ module TTY
     #
     # @api private
     class List
-      HELP = '(Use arrow keys, press Enter to select)'.freeze
+      HELP = '(Use arrow keys or tab, press Enter to select)'.freeze
 
       # Create instance of TTY::Prompt::List menu.
       #
@@ -101,6 +101,10 @@ module TTY
       end
 
       def keydown(event)
+        @active = (@active == @choices.length) ? 1 : @active + 1
+      end
+
+      def keytab(event)
         @active = (@active == @choices.length) ? 1 : @active + 1
       end
 

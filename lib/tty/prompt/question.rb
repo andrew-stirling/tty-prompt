@@ -44,8 +44,10 @@ module TTY
         @read       = options.fetch(:read) { UndefinedSetting }
         @convert    = options.fetch(:convert) { UndefinedSetting }
         @color      = options.fetch(:color) { :green }
+        @check      = options.fetch(:check) { false }
         @done       = false
         @input      = nil
+        @prefix     = ""
 
         @evaluator = Evaluator.new(self)
 
@@ -67,7 +69,21 @@ module TTY
         return if blank?(message)
         @message = message
         block.call(self) if block
-        render
+        return render unless @check
+        first = false
+        loop do
+          @prefix = ""
+          @done = false
+          @input = nil
+          first = render
+          @done = false
+          @input = nil
+          @prefix = "(Again) "
+          second = render
+          break if first == second
+          @prompt.error("Input did not match.")
+        end
+        first
       end
 
       # Read answer and convert to type
@@ -89,7 +105,7 @@ module TTY
       #
       # @api private
       def render_question
-        header = "#{prompt.prefix}#{message} "
+        header = "#{prompt.prefix}#{@prefix}#{message} "
         if @convert == :bool && !@done
           header += @prompt.decorate('(Y/n)', :bright_black) + ' '
         elsif !echo?
